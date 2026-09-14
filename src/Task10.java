@@ -1,15 +1,17 @@
-// Найти все пятизначные натуральные числа из заданной последовательности,
-// кратные n, первая цифра которых равна пяти, а все цифры различны.
-// Подсчитать количество таких чисел.
-import java.util.ArrayList;
-import java.util.List;
+// Дана квадратная матрица. Построить матрицу, вычитая из максимальных
+// элементов каждой строки матрицы среднее арифметическое элементов строки.
+// Затем отсортировать строки матрицы по возрастанию элементов, стоящих на диагонали.
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class Task10 {
+    private static final int Decimals = 2;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите n: ");
+        System.out.print("Введите размер матрицы n: ");
         int n = Utils.input(scanner, Integer::parseInt);
 
         if (n <= 0) {
@@ -17,56 +19,58 @@ public class Task10 {
             return;
         }
 
-        System.out.println("Введите последовательность чисел в одной строке:");
-        List<Integer> numbers = new ArrayList<>();
-        Utils.input(numbers, scanner, Integer::parseInt);
+        double[][] matrix = MatrixUtils.readSquare(scanner, n);
 
-        int count = 0;
-        System.out.println("Подходящие числа:");
+        System.out.println("Исходная матрица:");
+        MatrixUtils.print(matrix, Decimals);
 
-        for (int number : numbers) {
-            if (isFiveDigit(number)
-                    && isDividedBy(number, n)
-                    && isFirstNumberN(number, 5)
-                    && hasUniqueDigits(number)) {
-                System.out.println(number);
-                count++;
-            }
-        }
+        subtractMeanFromMaxElements(matrix);
+        System.out.println("После вычитания среднего из максимальных элементов:");
+        MatrixUtils.print(matrix, Decimals);
 
-        System.out.println("Количество: " + count);
+        matrix = sortRowsByDiagonal(matrix);
+        System.out.println("После сортировки строк по возрастанию диагональных элементов:");
+        MatrixUtils.print(matrix, Decimals);
     }
 
-    private static boolean isFiveDigit(int number) {
-        return number >= 10_000 && number <= 99_999;
-    }
+    private static void subtractMeanFromMaxElements(double[][] matrix) {
+        for (double[] row : matrix) {
+            double max = row[0];
+            double sum = 0;
 
-    private static boolean isDividedBy(int number, int n) {
-        return number % n == 0;
-    }
+            for (double value : row) {
+                if (value > max) {
+                    max = value;
+                }
 
-    private static boolean isFirstNumberN(int number, int n) {
-        while (number >= 10) {
-            number /= 10;
-        }
-
-        return number == n;
-    }
-
-    private static boolean hasUniqueDigits(int number) {
-        boolean[] usedDigits = new boolean[10];
-
-        while (number > 0) {
-            int digit = number % 10;
-
-            if (usedDigits[digit]) {
-                return false;
+                sum += value;
             }
 
-            usedDigits[digit] = true;
-            number /= 10;
+            double mean = sum / row.length;
+
+            for (int j = 0; j < row.length; j++) {
+                if (row[j] == max) {
+                    row[j] -= mean;
+                }
+            }
+        }
+    }
+
+    private static double[][] sortRowsByDiagonal(double[][] matrix) {
+        Integer[] order = new Integer[matrix.length];
+
+        for (int i = 0; i < order.length; i++) {
+            order[i] = i;
         }
 
-        return true;
+        Arrays.sort(order, Comparator.comparingDouble(i -> matrix[i][i]));
+
+        double[][] sorted = new double[matrix.length][];
+
+        for (int i = 0; i < order.length; i++) {
+            sorted[i] = matrix[order[i]];
+        }
+
+        return sorted;
     }
 }
