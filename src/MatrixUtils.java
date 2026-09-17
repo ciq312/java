@@ -7,7 +7,6 @@ public class MatrixUtils {
     private MatrixUtils() {
     }
 
-    // Строка с неверным количеством чисел запрашивается повторно
     public static double[][] readSquare(Scanner scanner, int n) {
         double[][] matrix = new double[n][];
 
@@ -32,7 +31,6 @@ public class MatrixUtils {
         return matrix;
     }
 
-    // Значения округляются до 0.1, чтобы матрица читалась при выводе
     public static double[][] generateSquare(Random random, int n, double minValue, double maxValue) {
         double[][] matrix = new double[n][n];
 
