@@ -1,0 +1,32 @@
+# Format: TYPE; carat=<0.01..500>; price=<per carat, > 0>; transparency=<0..100>; <type-specific fields>
+# Precious:      cut=ROUND|PRINCESS|OVAL|EMERALD|CUSHION|PEAR
+#   DIAMOND      color=D..K
+#   RUBY         heated=true|false
+#   EMERALD      origin=<text>
+# Semi-precious: hardness=<1..10>
+#   AMETHYST     intensity=LIGHT|MEDIUM|DEEP
+#   TOPAZ        color=WHITE|BLUE|PINK|IMPERIAL
+#   OPAL         playOfColor=true|false
+
+# --- valid ---
+DIAMOND; carat=1.2; price=8000; transparency=98; cut=ROUND; color=E
+RUBY; carat=2.0; price=3000; transparency=80; cut=OVAL; heated=false
+EMERALD; carat=1.5; price=2500; transparency=70; cut=EMERALD; origin=Colombia
+AMETHYST; carat=5.0; price=40; transparency=85; hardness=7; intensity=DEEP
+TOPAZ; carat=4.0; price=60; transparency=90; hardness=8; color=BLUE
+OPAL; carat=2.0; price=200; transparency=35; hardness=6; playOfColor=true
+
+# --- invalid optional fields: replaced with defaults ---
+DIAMOND; carat=0.8; price=6500; transparency=95; cut=TRIANGLE; color=Z
+TOPAZ; carat=2.5; price=50; transparency=88; hardness=15; color=PURPLE
+OPAL; carat=3.2; price=150; transparency=40; hardness=abc; playOfColor=yes
+EMERALD; carat=1.1; price=2200; transparency=65; origin=; broken-field
+
+# --- invalid required fields or type: line ignored ---
+RUBY; carat=-1; price=3000; transparency=80
+EMERALD; carat=abc; price=2500; transparency=70
+AMETHYST; carat=3.0; price=35; transparency=150
+DIAMOND; price=5000; transparency=90
+TOPAZ; carat=1.0; price=0; transparency=50
+PEARL; carat=1.0; price=100; transparency=10
+just some garbage text
