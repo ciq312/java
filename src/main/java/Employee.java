@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public abstract class Employee {
+
     @NotEmpty
     private String firstName;
     @NotEmpty
