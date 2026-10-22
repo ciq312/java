@@ -1,7 +1,6 @@
 import java.math.BigDecimal;
 import java.util.Objects;
 
-// Weight is in tonnes
 public record Cargo(String name, double weight, boolean fragile, BigDecimal value) {
     public Cargo {
         if (name == null || name.isBlank()) {

@@ -12,7 +12,6 @@ public class PassengerWagon extends AbstractWagon implements PassengerCarrier {
         this.seatCount = seatCount;
     }
 
-    // Boarding and disembarking are the loading and unloading of a passenger wagon
     @Override
     public void boardPassengers(int count) {
         if (count <= 0) {

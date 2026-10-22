@@ -13,7 +13,6 @@ public class FreightWagon extends AbstractWagon implements Sealable {
         this.loadCapacity = loadCapacity;
     }
 
-    // In tonnes
     public double getLoadCapacity() {
         return loadCapacity;
     }
