@@ -13,7 +13,6 @@ import java.util.Optional;
 public class Catalog {
     private static final Logger logger = LogManager.getLogger(Catalog.class);
 
-    // Records of each book in issue order; the last one is active while the book is not returned
     private final Map<Book, List<IssueRecord>> historyByBook = new LinkedHashMap<>();
     private final List<CatalogListener> listeners = new ArrayList<>();
     private int lastRecordId;
@@ -110,7 +109,6 @@ public class Catalog {
         return history;
     }
 
-    // Inner (non-static) class: records are created only by their catalog and numbered by its counter
     public class IssueRecord {
         private final int id;
         private final Book book;
@@ -141,7 +139,6 @@ public class Catalog {
             return issueDate;
         }
 
-        // Empty while the book is still with the reader
         public Optional<LocalDate> getReturnDate() {
             return Optional.ofNullable(returnDate);
         }

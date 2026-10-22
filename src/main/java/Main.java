@@ -4,7 +4,6 @@ public class Main {
     public static void main(String[] args) {
         Catalog catalog = new Catalog();
 
-        // Anonymous class: interface has two methods (so no lambda) and the object keeps its own state
         catalog.addListener(new CatalogListener() {
             private int booksOnHand;
 
